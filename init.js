@@ -13,7 +13,7 @@ camera.lookAt(scene.position);
 // create a render and set the size
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor("#000000");
+renderer.setClearColor(0x8a8a8a);
 document.body.appendChild(renderer.domElement);
 
 //controls
@@ -23,24 +23,37 @@ controls.addEventListener('change', render);
 //construção personagem
 let drag = {
     x: 0, y: -1, z:0, ry: 0, angle: 0, body: null, head: null, arms: [],
-    material: new THREE.MeshLambertMaterial({ color: 0xffffff }), 
+    material: new THREE.MeshLambertMaterial({ color: 0x4b4b4b, wireframe: false}), 
 
     init(){
         //corpo
-        const bodyGeometry = new THREE.BoxGeometry(1, 1, 1)
-        this.body = new THREE.Mesh(bodyGeometry, this.material)
+        const body_Geometry = new THREE.BoxGeometry(1, 1, 1)
+        this.body = new THREE.Mesh(body_Geometry, this.material)
         scene.add(this.body)
 
         //cabeça
-        const headGeometry = new THREE.BoxGeometry(1.2, 1.2, 1.2)
-        this.head = new THREE.Mesh(headGeometry, this.material)
+        const head_Geometry = new THREE.BoxGeometry(1.2, 0.8, 2)
+        this.head = new THREE.Mesh(head_Geometry, this.material)
         this.body.add(this.head)
-        this.head.position.y = 1.1;
+        this.head.position.z = 3;
     },
 }
 
 drag.init()
 drag.body.rotation.y = THREE.MathUtils.degToRad(-15)
+
+
+
+let light = new THREE.AmbientLight(0xffffff, Math.PI * 0.5);
+scene.add(light);
+
+let light2 = new THREE.PointLight(0xffffff, Math.PI * 20);
+light2.position.set(2, 4, 2);
+scene.add(light2);
+// light helper
+let pointLightHelper = new THREE.PointLightHelper(light2, 0.4);
+pointLightHelper.name = "helper";
+scene.add(pointLightHelper);
 
 //função render
 function render() {
