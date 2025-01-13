@@ -83,10 +83,12 @@ let drag = {
         boca_angle.add(boca_3D)
         this.head.add(this.boca)
 
+        //chifres cabeças+++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
+
         //adicionar pescoço+++++++++++++++++++++++++++++++++++++++++++++++++++++
-        let zpesc = 0.2
-        let ypesc = 0.5
-        let xpesc = 0.5
+        let zpesc = 0.5
+        let ypesc = headY -0.1
+        let xpesc = headX -0.1
 
         this.pescoço = new THREE.Object3D()
         const axesHelperPesc1 = new THREE.AxesHelper( 1 );
@@ -140,6 +142,8 @@ let drag = {
         this.pescoço.add(pesc_angle4);
         pesc3.add(pesc_angle4)
         pesc_angle4.position.z = zpesc/2
+
+        //body part 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         //adicionar tudo++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         this.body.add(this.pescoço);
