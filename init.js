@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
+let ZFBody = 1
+
+
+
 // create an empty scene, that will hold all our elements such as objects, cameras and lights
 const scene = new THREE.Scene();
 
@@ -30,14 +34,16 @@ let drag = {
 
     init(){
         //corpo
-        const body_Geometry = new THREE.BoxGeometry(1, 1, 1)
+        const body_Geometry = new THREE.BoxGeometry(1, 1, ZFBody)
         this.body = new THREE.Mesh(body_Geometry, this.material)
         const axesHelper1 = new THREE.AxesHelper( 1 );
         this.body.add( axesHelper1 );
         scene.add(this.body)
 
         //cabeça
-        //bloco principal*******************************
+        //bloco principal+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        
+        
         this.head = new THREE.Object3D()
         const head_Geometry = new THREE.Mesh(
             new THREE.BoxGeometry(1, 0.8, 2),
@@ -74,9 +80,12 @@ let drag = {
         boca_angle.add(boca_3D)
         this.head.add(this.boca)
 
-        //adicionar pescoço+++++++++++++++++++++++++++++
-        this.pescoço = new THREE.Object3D()
+        //adicionar pescoço+++++++++++++++++++++++++++++++++++++++++++++++++++++
+        let zpesc = 0.2
+        let ypesc = 0.5
+        let xpesc = 0.5
 
+        this.pescoço = new THREE.Object3D()
         const axesHelperPesc1 = new THREE.AxesHelper( 1 );
 
         const pesc_angle1 = new THREE.Object3D()
@@ -84,19 +93,55 @@ let drag = {
         this.pescoço.add(pesc_angle1);
 
         const pesc1 = new THREE.Mesh(
-            new THREE.BoxGeometry(0.5, 0.5, 0.2),
+            new THREE.BoxGeometry(xpesc, ypesc, zpesc),
             this.material,
         )
         this.pescoço.add(pesc1);
         pesc_angle1.add(pesc1)
-        pesc1.position.z = 0.1
+        pesc1.position.z = zpesc/2
 
         
+        const axesHelperPesc2 = new THREE.AxesHelper( 1 );
+        const pesc_angle2 = new THREE.Object3D()
+        pesc_angle2.add(axesHelperPesc2)
+        this.pescoço.add(pesc_angle2);
+        pesc1.add(pesc_angle2)
+        pesc_angle2.position.z = zpesc/2
+        
+        const pesc2 = new THREE.Mesh(
+            new THREE.BoxGeometry(xpesc, ypesc, zpesc),
+            this.material,
+        )
+        this.pescoço.add(pesc2);
+        pesc_angle2.add(pesc2)
+        pesc2.position.z = zpesc/2
+        
+        const axesHelperPesc3 = new THREE.AxesHelper( 1 );
+        const pesc_angle3 = new THREE.Object3D()
+        pesc_angle3.add(axesHelperPesc3)
+        this.pescoço.add(pesc_angle3);
+        pesc2.add(pesc_angle3)
+        pesc_angle3.position.z = zpesc/2
+        
+        const pesc3 = new THREE.Mesh(
+            new THREE.BoxGeometry(xpesc, ypesc, zpesc),
+            this.material,
+        )
+        this.pescoço.add(pesc3);
+        pesc_angle3.add(pesc3)
+        pesc3.position.z = zpesc/2
 
-        //adicionar tudo********************************
+        const axesHelperPesc4 = new THREE.AxesHelper( 1 );
+        const pesc_angle4 = new THREE.Object3D()
+        pesc_angle4.add(axesHelperPesc4)
+        this.pescoço.add(pesc_angle4);
+        pesc3.add(pesc_angle4)
+        pesc_angle4.position.z = zpesc/2
+
+        //adicionar tudo++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         this.body.add(this.pescoço);
-        this.pescoço.position.z = 1;
-        this.pescoço.add(this.head)
+        this.pescoço.position.z = ZFBody/2;
+        pesc_angle4.add(this.head)
         this.head.position.z = 3;
     },
     /*moveBoca(angle) {
