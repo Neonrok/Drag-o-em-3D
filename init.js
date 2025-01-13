@@ -25,7 +25,7 @@ const axesHelper = new THREE.AxesHelper( 1 );
 scene.add( axesHelper );
 //construção personagem
 let drag = {
-    x: 0, y: -1, z:0, ry: 0, angle: 0, body: null, boca: null,
+    x: 0, y: -1, z:0, ry: 0, angle: 0, body: null, pescoço:null, head:null, boca: null,
     material: new THREE.MeshLambertMaterial({ color: 0x4b4b4b, wireframe: true}), 
 
     init(){
@@ -38,45 +38,74 @@ let drag = {
 
         //cabeça
         //bloco principal*******************************
-        const head_model = new THREE.Group()
+        this.head = new THREE.Object3D()
         const head_Geometry = new THREE.Mesh(
             new THREE.BoxGeometry(1, 0.8, 2),
             this.material,
         )
-        head_model.add(head_Geometry);
+        this.head.add(head_Geometry);
         const axesHelper2 = new THREE.AxesHelper( 1 );
-        head_model.add( axesHelper2 );
+        this.head.add( axesHelper2 );
         const eys_Geometry = new THREE.Mesh(
             new THREE.BoxGeometry(0.6, 0.2, 0.2),
             this.material
         )
         eys_Geometry.position.y = 0.5
         eys_Geometry.position.z = -0.6
-        head_model.add(eys_Geometry);
+        this.head.add(eys_Geometry);
         eys_Geometry.add(axesHelper);
         
         //Parte da boca*********************************
-        const boca_model = new THREE.Group()
+        this.boca= new THREE.Group()
+        const axesHelper4 = new THREE.AxesHelper( 1 );
         const boca_angle = new THREE.Object3D()
+        boca_angle.add( axesHelper4 );
+        boca_angle.position.y = -0.4
+        boca_angle.position.z = -1
+        this.boca.add(boca_angle)
+        this.head.add(boca_angle)
         const boca_3D = new THREE.Mesh(
             new THREE.BoxGeometry(1, 0.2, 2),
             this.material,
         )
+        boca_3D.position.y = -0.1
+        boca_3D.position.z = 1
+        this.boca.add(boca_3D)
+        boca_angle.add(boca_3D)
+        this.head.add(this.boca)
+
+        //adicionar pescoço+++++++++++++++++++++++++++++
+        this.pescoço = new THREE.Object3D()
+
+        const axesHelperPesc1 = new THREE.AxesHelper( 1 );
+
+        const pesc_angle1 = new THREE.Object3D()
+        pesc_angle1.add(axesHelperPesc1)
+        this.pescoço.add(pesc_angle1);
+
+        const pesc1 = new THREE.Mesh(
+            new THREE.BoxGeometry(0.5, 0.5, 0.2),
+            this.material,
+        )
+        this.pescoço.add(pesc1);
+        pesc_angle1.add(pesc1)
+        pesc1.position.z = 0.1
+
+        
 
         //adicionar tudo********************************
-        this.body.add(head_model);
-        head_model.position.z = 3;
+        this.body.add(this.pescoço);
+        this.pescoço.position.z = 1;
+        this.pescoço.add(this.head)
+        this.head.position.z = 3;
     },
-    moveBoca(angle) {
-        const m = i % 2 === 0 ? 1 : -1
+    /*moveBoca(angle) {
+        const m = angle % 2 === 0 ? 1 : -1
         this.boca.rotation.z = THREE.MathUtils.degToRad(angle * m)
-    }
+    }*/
 }
 
 drag.init()
-
-
-
 
 
 let light = new THREE.AmbientLight(0xffffff, Math.PI * 0.5);
@@ -96,12 +125,12 @@ function render() {
 };
 
 // INPUT CONTROL: set the rotation of the arms
-const input = document.querySelector('#armAngle')
+/*const input = document.querySelector('#armAngle')
 input.addEventListener('input', (e) => {
     console.log(e.target.value)
     drag.moveBoca(e.target.value)
     render()
-})
+})*/
 
 // Update renderer (and camera) on window resize
 window.addEventListener('resize', () => {
