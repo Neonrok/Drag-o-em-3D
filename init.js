@@ -43,10 +43,13 @@ let drag = {
         //cabeça
         //bloco principal+++++++++++++++++++++++++++++++++++++++++++++++++++++++
         
-        
+        let headX = 1
+        let headY = 0.8
+        let headZ = 2
+
         this.head = new THREE.Object3D()
         const head_Geometry = new THREE.Mesh(
-            new THREE.BoxGeometry(1, 0.8, 2),
+            new THREE.BoxGeometry(headX, headY, headZ),
             this.material,
         )
         this.head.add(head_Geometry);
@@ -71,7 +74,7 @@ let drag = {
         this.boca.add(boca_angle)
         this.head.add(boca_angle)
         const boca_3D = new THREE.Mesh(
-            new THREE.BoxGeometry(1, 0.2, 2),
+            new THREE.BoxGeometry(headX, 0.2, headZ),
             this.material,
         )
         boca_3D.position.y = -0.1
@@ -142,7 +145,7 @@ let drag = {
         this.body.add(this.pescoço);
         this.pescoço.position.z = ZFBody/2;
         pesc_angle4.add(this.head)
-        this.head.position.z = 3;
+        this.head.position.z = headZ/2;
     },
     /*moveBoca(angle) {
         const m = angle % 2 === 0 ? 1 : -1
