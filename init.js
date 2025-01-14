@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 let ZFBody = 1
-
+let exbox = 1
 
 
 // create an empty scene, that will hold all our elements such as objects, cameras and lights
@@ -34,7 +34,7 @@ let drag = {
 
     init(){
         //corpo
-        const body_Geometry = new THREE.BoxGeometry(1, 1, ZFBody)
+        const body_Geometry = new THREE.BoxGeometry(1.7, 1.5, ZFBody)
         this.body = new THREE.Mesh(body_Geometry, this.material)
         const axesHelper1 = new THREE.AxesHelper( 1 );
         this.body.add( axesHelper1 );
@@ -65,14 +65,12 @@ let drag = {
         eys_Geometry.add(axesHelper);
         
         //Parte da boca*********************************
-        this.boca= new THREE.Group()
         const axesHelper4 = new THREE.AxesHelper( 1 );
-        const boca_angle = new THREE.Object3D()
-        boca_angle.add( axesHelper4 );
-        boca_angle.position.y = -0.4
-        boca_angle.position.z = -1
-        this.boca.add(boca_angle)
-        this.head.add(boca_angle)
+        this.boca= new THREE.Object3D()
+        this.boca.add( axesHelper4 );
+        this.boca.position.y = -0.4
+        this.boca.position.z = -1
+        this.head.add(this.boca)
         const boca_3D = new THREE.Mesh(
             new THREE.BoxGeometry(headX, 0.2, headZ),
             this.material,
@@ -80,8 +78,6 @@ let drag = {
         boca_3D.position.y = -0.1
         boca_3D.position.z = 1
         this.boca.add(boca_3D)
-        boca_angle.add(boca_3D)
-        this.head.add(this.boca)
 
         //chifres cabeças+++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
 
@@ -148,18 +144,15 @@ let drag = {
         //adicionar tudo++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         this.body.add(this.pescoço);
         this.pescoço.position.z = ZFBody/2;
+        this.pescoço.position.y = 0.3
         pesc_angle4.add(this.head)
         this.head.position.z = headZ/2;
     },
-    /*moveBoca(angle) {
-        const m = angle % 2 === 0 ? 1 : -1
-        this.boca.rotation.z = THREE.MathUtils.degToRad(angle * m)
-    }*/
 }
 
 drag.init()
 
-
+window.drag = drag
 let light = new THREE.AmbientLight(0xffffff, Math.PI * 0.5);
 scene.add(light);
 
@@ -171,18 +164,27 @@ let pointLightHelper = new THREE.PointLightHelper(light2, 0.4);
 pointLightHelper.name = "helper";
 scene.add(pointLightHelper);
 
+
+renderer.setAnimationLoop(render)
 //função render
 function render() {
+    
+    if (drag.boca.rotation.x<0){
+        exbox = 1
+    }else if (drag.boca.rotation.x>0.5){
+        exbox = -1
+    };
+    drag.boca.rotation.x += 0.01 * exbox
     renderer.render(scene, camera);
 };
 
 // INPUT CONTROL: set the rotation of the arms
-/*const input = document.querySelector('#armAngle')
+const input = document.querySelector('#armAngle')
 input.addEventListener('input', (e) => {
     console.log(e.target.value)
     drag.moveBoca(e.target.value)
     render()
-})*/
+})
 
 // Update renderer (and camera) on window resize
 window.addEventListener('resize', () => {
