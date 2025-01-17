@@ -29,8 +29,8 @@ const axesHelper = new THREE.AxesHelper( 1 );
 scene.add( axesHelper );
 //construção personagem
 let drag = {
-    x: 0, y: -1, z:0, ry: 0, angle: 0, body: null, pescoço:null, head:null, boca: null,
-    material: new THREE.MeshLambertMaterial({ color: 0x4b4b4b, wireframe: true}), 
+    x: 0, y: -1, z:0, ry: 0, angle: 0, body: null, pescoço:null, head:null, boca: null, head_x: [],
+    material: new THREE.MeshLambertMaterial({ color: 0x4b4b4b, wireframe: false}), 
 
     init(){
         //corpo
@@ -78,8 +78,6 @@ let drag = {
         boca_3D.position.y = -0.1
         boca_3D.position.z = 1
         this.boca.add(boca_3D)
-
-        //chifres cabeças+++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
 
         //adicionar pescoço+++++++++++++++++++++++++++++++++++++++++++++++++++++
         let zpesc = 0.5
@@ -138,6 +136,25 @@ let drag = {
         this.pescoço.add(pesc_angle4);
         pesc3.add(pesc_angle4)
         pesc_angle4.position.z = zpesc/2
+        
+        //chifres cabeças+++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
+        
+        
+        const armGeometry = new THREE.BoxGeometry(0.6, 0.2, 0.2)
+        for (let i = 0; i < 2; i++) {
+            const axesHelperXip2 = new THREE.AxesHelper( 1 );
+            const xipAng = new THREE.Object3D()
+            pesc_angle4.add(xipAng)
+            const xip = new THREE.Mesh(armGeometry, this.material)
+            xip.add(axesHelperXip2)
+            xipAng.add(xip)
+            
+            this.head_x.push(xip)
+            xip.position.x=0.7
+            xip.rotation.y = 0.4
+            xipAng.rotation.z = i*1.5 +0.8
+            
+        }
 
         //body part 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
