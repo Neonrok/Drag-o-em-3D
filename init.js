@@ -27,9 +27,18 @@ controls.addEventListener('change', render);
 //auciliar 3d
 const axesHelper = new THREE.AxesHelper( 1 );
 scene.add( axesHelper );
+
 //construção personagem
+let material = new THREE.MeshLambertMaterial({ color: 0x4b4b4b, wireframe: false});
+let location = {x: 3, y: -1, z:0};
+let head_porp = {x: 1, y: 0.8, z:2};
+let head = [];
+
+
+
+//vTemp
 let drag = {
-    x: 0, y: -1, z:0, ry: 0, angle: 0, body: null, pescoço:null, head:null, boca: null, head_x: [],
+    x: 0, y: -1, z:0, ry: 0, angle: 0, body: null, pescoço:null, head:null, boca: null, head_x: [], bodyP2: [],
     material: new THREE.MeshLambertMaterial({ color: 0x4b4b4b, wireframe: false}), 
 
     init(){
@@ -81,7 +90,7 @@ let drag = {
 
         //adicionar pescoço+++++++++++++++++++++++++++++++++++++++++++++++++++++
         let zpesc = 0.5
-        let ypesc = headY -0.1
+        let ypesc = headY 
         let xpesc = headX -0.1
 
         this.pescoço = new THREE.Object3D()
@@ -138,8 +147,6 @@ let drag = {
         pesc_angle4.position.z = zpesc/2
         
         //chifres cabeças+++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
-        
-        
         const armGeometry = new THREE.BoxGeometry(0.6, 0.2, 0.2)
         for (let i = 0; i < 2; i++) {
             const axesHelperXip2 = new THREE.AxesHelper( 1 );
@@ -157,13 +164,29 @@ let drag = {
         }
 
         //body part 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        let zbody2 = 4
+        let ybody2 = 2
+        let xbody2 = 2.5
+        const bodydivi = new THREE.Object3D();
+        this.body.add(bodydivi);
+        bodydivi.position.z = -ZFBody/2;
+
+        const bodyP2 = new THREE.Mesh(
+            new THREE.BoxGeometry(xbody2, ybody2, zbody2),
+            this.material,
+        );
+        bodydivi.add(bodyP2);
+        bodyP2.position.z=-zbody2/2;
+        bodyP2.position.y=-0.24;
+
 
         //adicionar tudo++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         this.body.add(this.pescoço);
         this.pescoço.position.z = ZFBody/2;
-        this.pescoço.position.y = 0.3
+        this.pescoço.position.y = 0.24
         pesc_angle4.add(this.head)
         this.head.position.z = headZ/2;
+        this.head.position.y = 0.05
     },
 }
 
