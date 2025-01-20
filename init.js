@@ -29,16 +29,10 @@ const axesHelper = new THREE.AxesHelper( 1 );
 scene.add( axesHelper );
 
 //construção personagem
-let material = new THREE.MeshLambertMaterial({ color: 0x4b4b4b, wireframe: false});
-let location = {x: 3, y: -1, z:0};
-let head_porp = {x: 1, y: 0.8, z:2};
-let head = [];
-
-
-
 //vTemp
 let drag = {
-    x: 0, y: -1, z:0, ry: 0, angle: 0, body: null, pescoço:null, head:null, boca: null, head_x: [], bodyP2: [],
+    x: 0, y: -1, z:0, ry: 0, angle: 0, body: null, pescoço:null, head:null,
+    boca: null, head_x: [], bodyP2: null, menbers: [],
     material: new THREE.MeshLambertMaterial({ color: 0x4b4b4b, wireframe: false}), 
 
     init(){
@@ -178,6 +172,28 @@ let drag = {
         bodydivi.add(bodyP2);
         bodyP2.position.z=-zbody2/2;
         bodyP2.position.y=-0.24;
+
+        //body menbers+++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ ++
+        //assim evito de repetir muito codigo
+        for(let i = 0; i<4; i++){
+            let place_loc = {x: xbody2/2, y: -ybody2*0.4, z: zbody2/2};
+            let gen_Menb_axesHelper = new THREE.AxesHelper( 1 );
+            let x_y;
+            switch(i){
+                case 0: x_y = {x:1, z:1};break;
+                case 1: x_y = {x:-1, z:1};break;
+                case 2: x_y = {x:1, z:-1};break;
+                case 3: x_y = {x:-1, z:-1};break;
+            }
+            let patAng = new THREE.Object3D()
+            patAng.add(gen_Menb_axesHelper)
+            bodyP2.add(patAng);
+            patAng.position.x= place_loc.x * x_y.x
+            patAng.position.y= place_loc.y
+            patAng.position.z= place_loc.z * x_y.z
+            //blocos fisicos
+            
+        };
 
 
         //adicionar tudo++++++++++++++++++++++++++++++++++++++++++++++++++++++++
