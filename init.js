@@ -158,7 +158,7 @@ let drag = {
         }
 
         //body part 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        let zbody2 = 4
+        let zbody2 = 5
         let ybody2 = 2
         let xbody2 = 2.5
         const bodydivi = new THREE.Object3D();
@@ -178,6 +178,7 @@ let drag = {
         for(let i = 0; i<4; i++){
             let place_loc = {x: xbody2/2, y: -ybody2*0.4, z: zbody2/2};
             let gen_Menb_axesHelper = new THREE.AxesHelper( 1 );
+            let sub_Menb_axesHelper = new THREE.AxesHelper( 1 );
             let x_y;
             switch(i){
                 case 0: x_y = {x:1, z:1};break;
@@ -188,11 +189,33 @@ let drag = {
             let patAng = new THREE.Object3D()
             patAng.add(gen_Menb_axesHelper)
             bodyP2.add(patAng);
-            patAng.position.x= place_loc.x * x_y.x
+            patAng.position.x= (place_loc.x - 0.5) * x_y.x
             patAng.position.y= place_loc.y
-            patAng.position.z= place_loc.z * x_y.z
+            patAng.position.z= (place_loc.z - 0.5) * x_y.z
             //blocos fisicos
-            
+            //antebraço
+            let a1g = {x:0.5, y:1.5, z:0.5};
+            let arm_1 = new THREE.Mesh(
+                new THREE.BoxGeometry(a1g.x, a1g.y, a1g.z),
+                this.material,
+            );
+            patAng.add(arm_1)
+            arm_1.position.y=-a1g.y/2
+
+            //articulação
+            let subAng = new THREE.Object3D();
+            subAng.add(sub_Menb_axesHelper);
+            arm_1.add(subAng);
+            subAng.position.y= a1g.y/2;
+
+            //2ªparte
+            let a2g = {x:0.3, y:1, z:0.3};
+            let arm_2 = new THREE.Mesh(
+                new THREE.BoxGeometry(a2g.x, a2g.y, a2g.z),
+                this.material,
+            );
+            arm_1.add(arm_2)
+            arm_2.position.y=-a1g.y/2
         };
 
 
