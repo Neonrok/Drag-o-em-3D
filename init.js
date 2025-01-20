@@ -179,6 +179,7 @@ let drag = {
             let place_loc = {x: xbody2/2, y: -ybody2*0.4, z: zbody2/2};
             let gen_Menb_axesHelper = new THREE.AxesHelper( 1 );
             let sub_Menb_axesHelper = new THREE.AxesHelper( 1 );
+            let sub_Art_axesHelper = new THREE.AxesHelper( 1 );
             let x_y;
             switch(i){
                 case 0: x_y = {x:1, z:1};break;
@@ -206,7 +207,7 @@ let drag = {
             let subAng = new THREE.Object3D();
             subAng.add(sub_Menb_axesHelper);
             arm_1.add(subAng);
-            subAng.position.y= a1g.y/2;
+            subAng.position.y= -a1g.y/2.1;
 
             //2ªparte
             let a2g = {x:0.3, y:1, z:0.3};
@@ -214,8 +215,29 @@ let drag = {
                 new THREE.BoxGeometry(a2g.x, a2g.y, a2g.z),
                 this.material,
             );
-            arm_1.add(arm_2)
-            arm_2.position.y=-a1g.y/2
+            subAng.add(arm_2)
+            arm_2.position.y=-a2g.y/2 
+
+            //articulação tornizelo
+            let subAngArt = new THREE.Object3D();
+            subAngArt.add(sub_Art_axesHelper);
+            arm_2.add(subAngArt);
+            subAngArt.position.y= -a2g.y/2.5;
+
+            //pé +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
+            let a3g = {x:0.8, y:0.3, z:1.5};
+            let arm_3 = new THREE.Mesh(
+                new THREE.BoxGeometry(a3g.x, a3g.y, a3g.z),
+                this.material,
+            );
+            subAngArt.add(arm_3)
+            arm_3.position.y=-a3g.y/2 
+            arm_3.position.z=a3g.z/2 -0.2
+
+            //anglos +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
+            patAng.rotation.x = -0.5
+            subAng.rotation.x = 1.9
+            subAngArt.rotation.x = -0.2
         };
 
 
@@ -247,12 +269,9 @@ scene.add(pointLightHelper);
 renderer.setAnimationLoop(render)
 //função render
 function render() {
-    
-    if (drag.boca.rotation.x<0){
-        exbox = 1
-    }else if (drag.boca.rotation.x>0.5){
-        exbox = -1
-    };
+    //animação da boca
+    if (drag.boca.rotation.x<0){exbox = 1}else
+    if (drag.boca.rotation.x>0.5){exbox = -1};
     drag.boca.rotation.x += 0.01 * exbox
     renderer.render(scene, camera);
 };
