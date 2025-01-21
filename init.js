@@ -239,6 +239,59 @@ let drag = {
             subAng.rotation.x = 1.9
             subAngArt.rotation.x = -0.2
         };
+        //Asas++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
+        for(let i=0; i<2; i++){
+            let place_loc = {x: xbody2/2, y: ybody2*0.4, z: zbody2/2};
+            let gen_As_axesHelper = new THREE.AxesHelper( 1 );
+            let sub_Menb_axesHelper = new THREE.AxesHelper( 1 );
+            let sub_Art_axesHelper = new THREE.AxesHelper( 1 );
+            let x_y;
+            switch(i){
+                case 0: x_y = 1;break;
+                case 1: x_y = -1;break;
+            };
+            let AsAng = new THREE.Object3D()
+            AsAng.add(gen_As_axesHelper)
+            bodyP2.add(AsAng);
+            AsAng.position.x= (place_loc.x - 0.1) * x_y
+            AsAng.position.y= place_loc.y
+            AsAng.position.z= (place_loc.z - 0.1)
+            AsAng.rotation.z = -0.9 *x_y
+            let a1g = {x:0.3, y:2.5, z:0.3};
+            let arm_1 = new THREE.Mesh(
+                new THREE.BoxGeometry(a1g.x, a1g.y, a1g.z),
+                this.material,
+            );
+            AsAng.add(arm_1)
+            arm_1.position.y=a1g.y/2
+            
+            let subAng = new THREE.Object3D();
+            subAng.add(sub_Menb_axesHelper);
+            arm_1.add(subAng);
+            subAng.position.y= a1g.y/2.1;
+
+            //2ªparte
+            let a2g = {x:0.3, y:0.3, z:1.8};
+            let As_2 = new THREE.Mesh(
+                new THREE.BoxGeometry(a2g.x, a2g.y, a2g.z),
+                this.material,
+            );
+            subAng.add(As_2)
+            As_2.position.z=-a2g.z/2 
+
+            let subAngArt = new THREE.Object3D();
+            subAngArt.add(sub_Art_axesHelper);
+            subAng.add(subAngArt);
+            subAngArt.rotation.x = -0.2
+            let a3g = {x:0.3, y:2.5, z:0.3};
+            let arm_3 = new THREE.Mesh(
+                new THREE.BoxGeometry(a3g.x, a3g.y, a3g.z),
+                this.material,
+            );
+            subAngArt.add(arm_3)
+            arm_3.position.y=a3g.y/2 
+            arm_3.position.z=a3g.z/2 -0.2
+        }
 
 
         //adicionar tudo++++++++++++++++++++++++++++++++++++++++++++++++++++++++
