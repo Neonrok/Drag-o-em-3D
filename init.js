@@ -32,8 +32,9 @@ scene.add( axesHelper );
 //vTemp
 let drag = {
     x: 0, y: -1, z:0, ry: 0, angle: 0, body: null, pescoço:null, head:null,
-    boca: null, head_x: [], bodyP2: null, menbers: [],
-    material: new THREE.MeshLambertMaterial({ color: 0x4b4b4b, wireframe: false}), 
+    boca: null, head_x: [], bodyP2: null, menbers: [], asas: [],
+    material: new THREE.MeshLambertMaterial({ color: 0x4b4b4b, wireframe: false, side:THREE.DoubleSide}), 
+    materialb: new THREE.MeshLambertMaterial({ color: 0xaa00aa, wireframe: false, side:THREE.DoubleSide}),
 
     init(){
         //corpo
@@ -270,7 +271,21 @@ let drag = {
             arm_1.add(subAng);
             subAng.position.y= a1g.y/2.1;
 
-            //2ªparte
+            let geometry = new THREE.BufferGeometry();
+            const points = [] // define array of vertices
+            points.push(new THREE.Vector3(0.3, -2.2, 0.3))
+            points.push(new THREE.Vector3(0.3, 0.5, -1.5))
+            points.push(new THREE.Vector3(0, 0.5, 0.3))
+            geometry.setFromPoints(points);
+            
+            let As_C1 = new THREE.Mesh(geometry, this.materialb);
+            AsAng.add(As_C1)
+            As_C1.position.y =2
+            As_C1.position.z =-0.4
+            As_C1.rotation.y= 0.2
+            As_C1.rotation.z= -0.1
+
+            //2ªparte das asas +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ ++ ++
             let a2g = {x:0.3, y:0.3, z:1.8};
             let As_2 = new THREE.Mesh(
                 new THREE.BoxGeometry(a2g.x, a2g.y, a2g.z),
