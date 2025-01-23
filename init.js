@@ -32,7 +32,7 @@ scene.add( axesHelper );
 //vTemp
 let drag = {
     x: 0, y: -1, z:0, ry: 0, angle: 0, body: null, pescoço:null, head:null,
-    boca: null, head_x: [], bodyP2: null, menbers: [], asas: [],
+    boca: null, head_x: [], bodyP2: null, menbers: [], asas: null,
     material: new THREE.MeshLambertMaterial({ color: 0x4b4b4b, wireframe: false, side:THREE.DoubleSide}), 
     materialb: new THREE.MeshLambertMaterial({ color: 0xaa00aa, wireframe: false, side:THREE.DoubleSide}),
 
@@ -242,6 +242,7 @@ let drag = {
         };
         //Asas++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
         for(let i=0; i<2; i++){
+            this.asas= new THREE.Object3D()
             let place_loc = {x: xbody2/2, y: ybody2*0.4, z: zbody2/2};
             let gen_As_axesHelper = new THREE.AxesHelper( 1 );
             let sub_Menb_axesHelper = new THREE.AxesHelper( 1 );
@@ -252,6 +253,7 @@ let drag = {
                 case 1: x_y = -1;break;
             };
             let AsAng = new THREE.Object3D()
+            this.asas.add(AsAng)
             AsAng.add(gen_As_axesHelper)
             bodyP2.add(AsAng);
             AsAng.position.x= (place_loc.x - 0.1) * x_y
@@ -308,6 +310,107 @@ let drag = {
             arm_3.position.z=a3g.z/2 -0.2
         }
 
+        //Cauda +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
+        let zbody3 = 1.7
+        let ybody3 = 1.5
+        let xbody3 = 1.5
+
+        const bodyP3 = new THREE.Mesh(
+            new THREE.BoxGeometry(xbody3, ybody3, zbody3),
+            this.material,
+        );
+        bodyP2.add(bodyP3);
+        bodyP3.position.z=(-zbody2/2) -(zbody3/2);
+        bodyP3.position.y= 0.25
+        //--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --
+        const axesHelperC1 = new THREE.AxesHelper( 1 );
+        let zcb = 0.8
+        let ycb = 0.8
+        let xcb = 0.8
+        const CB = new THREE.Object3D();
+        CB.add(axesHelperC1)
+        bodyP3.add(CB);
+        CB.position.z=-zcb
+        CB.position.y=0.35
+        const BCB = new THREE.Mesh(
+            new THREE.BoxGeometry(xcb, ycb, zcb),
+            this.material,
+        );
+        CB.add(BCB);
+        BCB.position.z=-zcb/2;
+        //-
+        const axesHelperC2 = new THREE.AxesHelper( 1 );
+        const CB1 = new THREE.Object3D();
+        CB1.add(axesHelperC2)
+        BCB.add(CB1);
+        CB1.position.z=-zcb/2
+        const BCB2 = new THREE.Mesh(
+            new THREE.BoxGeometry(xcb, ycb, zcb),
+            this.material,
+        );
+        CB1.add(BCB2);
+        BCB2.position.z=-zcb/2;
+        //-
+        const axesHelperC3 = new THREE.AxesHelper( 1 );
+        const CB2 = new THREE.Object3D();
+        CB2.add(axesHelperC3)
+        BCB2.add(CB2);
+        CB2.position.z=-zcb/2
+        const BCB3 = new THREE.Mesh(
+            new THREE.BoxGeometry(xcb, ycb, zcb),
+            this.material,
+        );
+        CB2.add(BCB3);
+        BCB3.position.z=-zcb/2;
+        //-
+        const axesHelperC4 = new THREE.AxesHelper( 1 );
+        const CB3 = new THREE.Object3D();
+        CB3.add(axesHelperC4)
+        BCB3.add(CB3);
+        CB3.position.z=-zcb/2
+        const BCB4 = new THREE.Mesh(
+            new THREE.BoxGeometry(xcb, ycb, zcb),
+            this.material,
+        );
+        CB3.add(BCB4);
+        BCB4.position.z=-zcb/2;
+        //-
+        const axesHelperC5 = new THREE.AxesHelper( 1 );
+        const CB4 = new THREE.Object3D();
+        CB4.add(axesHelperC5)
+        BCB4.add(CB4);
+        CB4.position.z=-zcb/2
+        const BCB5 = new THREE.Mesh(
+            new THREE.BoxGeometry(xcb, ycb, zcb),
+            this.material,
+        );
+        CB4.add(BCB5);
+        BCB5.position.z=-zcb/2;
+        //-
+        const axesHelperC6 = new THREE.AxesHelper( 1 );
+        const CB5 = new THREE.Object3D();
+        CB5.add(axesHelperC6)
+        BCB5.add(CB5);
+        CB5.position.z=-zcb/2
+        const BCB6 = new THREE.Mesh(
+            new THREE.BoxGeometry(xcb, ycb, zcb),
+            this.material,
+        );
+        CB5.add(BCB6);
+        BCB6.position.z=-zcb/2;
+        //-
+        const axesHelperC7 = new THREE.AxesHelper( 1 );
+        const CB6 = new THREE.Object3D();
+        CB6.add(axesHelperC7)
+        BCB6.add(CB6);
+        CB6.position.z=-zcb/2
+        const BCB7 = new THREE.Mesh(
+            new THREE.BoxGeometry(xcb, ycb, zcb),
+            this.material,
+        );
+        CB6.add(BCB7);
+        BCB7.position.z=-zcb/2;
+        
 
         //adicionar tudo++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         this.body.add(this.pescoço);
@@ -338,19 +441,11 @@ renderer.setAnimationLoop(render)
 //função render
 function render() {
     //animação da boca
-    if (drag.boca.rotation.x<0){exbox = 1}else
-    if (drag.boca.rotation.x>0.5){exbox = -1};
-    drag.boca.rotation.x += 0.01 * exbox
+    if (drag.asas.rotation.x<0){exbox = 1}else
+    if (drag.asas.rotation.x>0.5){exbox = -1};
+    drag.asas.rotation.x += 0.01 * exbox
     renderer.render(scene, camera);
 };
-
-// INPUT CONTROL: set the rotation of the arms
-const input = document.querySelector('#armAngle')
-input.addEventListener('input', (e) => {
-    console.log(e.target.value)
-    drag.moveBoca(e.target.value)
-    render()
-})
 
 // Update renderer (and camera) on window resize
 window.addEventListener('resize', () => {
