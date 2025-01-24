@@ -98,7 +98,8 @@ let drag = {
         
         const pesc_angle2 = new THREE.Object3D()
         pesc1.add(pesc_angle2)
-        pesc_angle2.position.z = zpesc/2
+        pesc_angle2.position.z = zpesc/2;
+        pesc_angle2.rotation.x=0.1
         
         const pesc2 = new THREE.Mesh(
             new THREE.BoxGeometry(xpesc, ypesc, zpesc),
@@ -110,6 +111,7 @@ let drag = {
         const pesc_angle3 = new THREE.Object3D()
         pesc2.add(pesc_angle3)
         pesc_angle3.position.z = zpesc/2
+        pesc_angle3.rotation.x=0.1
         
         const pesc3 = new THREE.Mesh(
             new THREE.BoxGeometry(xpesc, ypesc, zpesc),
@@ -121,6 +123,7 @@ let drag = {
         const pesc_angle4 = new THREE.Object3D()
         pesc3.add(pesc_angle4)
         pesc_angle4.position.z = zpesc/2
+        pesc_angle4.rotation.x=0.1
         
         //chifres cabeças+++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
         const armGeometry = new THREE.BoxGeometry(0.6, 0.2, 0.2)
@@ -157,9 +160,6 @@ let drag = {
         //assim evito de repetir muito codigo
         for(let i = 0; i<4; i++){
             let place_loc = {x: xbody2/2, y: -ybody2*0.4, z: zbody2/2};
-            let gen_Menb_axesHelper = new THREE.AxesHelper( 1 );
-            let sub_Menb_axesHelper = new THREE.AxesHelper( 1 );
-            let sub_Art_axesHelper = new THREE.AxesHelper( 1 );
             let x_y;
             switch(i){
                 case 0: x_y = {x:1, z:1};break;
@@ -168,7 +168,6 @@ let drag = {
                 case 3: x_y = {x:-1, z:-1};break;
             }
             let patAng = new THREE.Object3D()
-            patAng.add(gen_Menb_axesHelper)
             bodyP2.add(patAng);
             patAng.position.x= (place_loc.x - 0.5) * x_y.x
             patAng.position.y= place_loc.y
@@ -185,7 +184,6 @@ let drag = {
 
             //articulação
             let subAng = new THREE.Object3D();
-            subAng.add(sub_Menb_axesHelper);
             arm_1.add(subAng);
             subAng.position.y= -a1g.y/2.1;
 
@@ -200,7 +198,6 @@ let drag = {
 
             //articulação tornizelo
             let subAngArt = new THREE.Object3D();
-            subAngArt.add(sub_Art_axesHelper);
             arm_2.add(subAngArt);
             subAngArt.position.y= -a2g.y/2.5;
 
@@ -218,13 +215,14 @@ let drag = {
             patAng.rotation.x = -0.5
             subAng.rotation.x = 1.9
             subAngArt.rotation.x = -0.2
+            this.menbers.push(patAng)
         };
         //Asas++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
         bodyP2.add(this.asas);
         
         for(let i=0; i<2; i++){
             let place_loc = {x: xbody2/2, y: ybody2*0.4, z: zbody2/2};
-            let gen_As_axesHelper = new THREE.AxesHelper( 1 );
+            let gen_As_axesHelper = new THREE.AxesHelper( 0 );
             let x_y;
             switch(i){
                 case 0: x_y = 1;break;
@@ -272,7 +270,7 @@ let drag = {
             angleB.add(As_2)
             As_2.position.z=-a2g.z/2 
         }
-        const AH = new THREE.AxesHelper( 1 );
+        const AH = new THREE.AxesHelper( 0 );
         this.asas.children[0].children[1].children[0].add(this.sub_asas1)
         this.sub_asas1.add(AH)
         let subAng = new THREE.Object3D();
@@ -302,7 +300,7 @@ let drag = {
         arm_3.position.y=a3g.y/2 
         arm_3.position.z=a3g.z/2 -0.2
 
-        const AH2 = new THREE.AxesHelper( 1 );
+        const AH2 = new THREE.AxesHelper( 0 );
         this.asas.children[1].children[1].children[0].add(this.sub_asas2)
         this.sub_asas2.add(AH2)
         let subAng1 = new THREE.Object3D();
@@ -461,10 +459,16 @@ function render() {
     drag.boca.rotation.x += spd/2.5 * -exbox
     drag.body.position.y+=spd/3 * -exbox
     //animação do pescoço
-    drag.pescoço.children[0].rotation.x+=spd/4 * -exbox
-    drag.pescoço.children[0].children[0].children[0].rotation.x+=spd/4 * -exbox
-    drag.pescoço.children[0].children[0].children[0].children[0].children[0].rotation.x+=spd/4 * -exbox
-    drag.pescoço.children[0].children[0].children[0].children[0].children[0].children[0].children[0].rotation.x+=spd/4 * -exbox
+    drag.pescoço.children[0].rotation.x+=spd/14 * -exbox
+    drag.pescoço.children[0].children[0].children[0].rotation.x+=spd/14 * -exbox
+    drag.pescoço.children[0].children[0].children[0].children[0].children[0].rotation.x+=spd/14 * -exbox
+    drag.pescoço.children[0].children[0].children[0].children[0].children[0].children[0].children[0].rotation.x+=spd/14 * -exbox
+    //menbros animation
+    for(let i = 0; i<drag.menbers.length; i++){
+        drag.menbers[i].rotation.x += spd/7 * -exbox
+        drag.menbers[i].children[0].children[0].rotation.x += spd/2 * exbox
+        drag.menbers[i].children[0].children[0].children[0].children[0].rotation.x += -spd * exbox
+    }
     //animação das asas
     if (drag.asas.children[0].rotation.z>-0.4){exbox = -1}else
     if (drag.asas.children[0].rotation.z< -2){exbox = 1};
@@ -485,7 +489,7 @@ function render() {
 
     renderer.render(scene, camera);
 };
-console.log(drag.pescoço)
+console.log(drag.asas)
 
 // Update renderer (and camera) on window resize
 window.addEventListener('resize', () => {
