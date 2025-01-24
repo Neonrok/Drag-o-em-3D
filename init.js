@@ -85,63 +85,49 @@ let drag = {
 
         this.pescoço = new THREE.Object3D()
         const pesc_angle1 = new THREE.Object3D()
-        pesc_angle1.add(axesHelperPesc1)
         this.pescoço.add(pesc_angle1);
+        this.pescoço.rotation.x=0.1
 
         const pesc1 = new THREE.Mesh(
             new THREE.BoxGeometry(xpesc, ypesc, zpesc),
             this.material,
         )
-        this.pescoço.add(pesc1);
         pesc_angle1.add(pesc1)
         pesc1.position.z = zpesc/2
 
         
-        const axesHelperPesc2 = new THREE.AxesHelper( 1 );
         const pesc_angle2 = new THREE.Object3D()
-        pesc_angle2.add(axesHelperPesc2)
-        this.pescoço.add(pesc_angle2);
         pesc1.add(pesc_angle2)
         pesc_angle2.position.z = zpesc/2
         
         const pesc2 = new THREE.Mesh(
             new THREE.BoxGeometry(xpesc, ypesc, zpesc),
             this.material,
-        )
-        this.pescoço.add(pesc2);
-        pesc_angle2.add(pesc2)
-        pesc2.position.z = zpesc/2
+        );
+        pesc_angle2.add(pesc2);
+        pesc2.position.z = zpesc/2;
         
-        const axesHelperPesc3 = new THREE.AxesHelper( 1 );
         const pesc_angle3 = new THREE.Object3D()
-        pesc_angle3.add(axesHelperPesc3)
-        this.pescoço.add(pesc_angle3);
         pesc2.add(pesc_angle3)
         pesc_angle3.position.z = zpesc/2
         
         const pesc3 = new THREE.Mesh(
             new THREE.BoxGeometry(xpesc, ypesc, zpesc),
             this.material,
-        )
-        this.pescoço.add(pesc3);
-        pesc_angle3.add(pesc3)
+        );
+        pesc_angle3.add(pesc3);
         pesc3.position.z = zpesc/2
 
-        const axesHelperPesc4 = new THREE.AxesHelper( 1 );
         const pesc_angle4 = new THREE.Object3D()
-        pesc_angle4.add(axesHelperPesc4)
-        this.pescoço.add(pesc_angle4);
         pesc3.add(pesc_angle4)
         pesc_angle4.position.z = zpesc/2
         
         //chifres cabeças+++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
         const armGeometry = new THREE.BoxGeometry(0.6, 0.2, 0.2)
         for (let i = 0; i < 2; i++) {
-            const axesHelperXip2 = new THREE.AxesHelper( 1 );
             const xipAng = new THREE.Object3D()
             pesc_angle4.add(xipAng)
             const xip = new THREE.Mesh(armGeometry, this.material)
-            xip.add(axesHelperXip2)
             xipAng.add(xip)
             
             this.head_x.push(xip)
@@ -474,6 +460,11 @@ function render() {
     //animação da boca
     drag.boca.rotation.x += spd/2.5 * -exbox
     drag.body.position.y+=spd/3 * -exbox
+    //animação do pescoço
+    drag.pescoço.children[0].rotation.x+=spd/4 * -exbox
+    drag.pescoço.children[0].children[0].children[0].rotation.x+=spd/4 * -exbox
+    drag.pescoço.children[0].children[0].children[0].children[0].children[0].rotation.x+=spd/4 * -exbox
+    drag.pescoço.children[0].children[0].children[0].children[0].children[0].children[0].children[0].rotation.x+=spd/4 * -exbox
     //animação das asas
     if (drag.asas.children[0].rotation.z>-0.4){exbox = -1}else
     if (drag.asas.children[0].rotation.z< -2){exbox = 1};
@@ -494,7 +485,7 @@ function render() {
 
     renderer.render(scene, camera);
 };
-console.log(drag.caud_ang)
+console.log(drag.pescoço)
 
 // Update renderer (and camera) on window resize
 window.addEventListener('resize', () => {
