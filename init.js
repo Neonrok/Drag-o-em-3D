@@ -25,7 +25,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.addEventListener('change', render);
 
 //auciliar 3d
-const axesHelper = new THREE.AxesHelper( 1 );
+const axesHelper = new THREE.AxesHelper( 3 );
 scene.add( axesHelper );
 
 //construção personagem
@@ -42,13 +42,10 @@ let drag = {
         //corpo
         const body_Geometry = new THREE.BoxGeometry(1.7, 1.5, ZFBody)
         this.body = new THREE.Mesh(body_Geometry, this.material)
-        const axesHelper1 = new THREE.AxesHelper( 1 );
-        this.body.add( axesHelper1 );
         scene.add(this.body)
 
         //cabeça
         //bloco principal+++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        
         let headX = 1
         let headY = 0.8
         let headZ = 2
@@ -59,8 +56,6 @@ let drag = {
             this.material,
         )
         this.head.add(head_Geometry);
-        const axesHelper2 = new THREE.AxesHelper( 1 );
-        this.head.add( axesHelper2 );
         const eys_Geometry = new THREE.Mesh(
             new THREE.BoxGeometry(0.6, 0.2, 0.2),
             this.material
@@ -68,12 +63,9 @@ let drag = {
         eys_Geometry.position.y = 0.5
         eys_Geometry.position.z = -0.6
         this.head.add(eys_Geometry);
-        eys_Geometry.add(axesHelper);
         
         //Parte da boca*********************************
-        const axesHelper4 = new THREE.AxesHelper( 1 );
-        this.boca= new THREE.Object3D()
-        this.boca.add( axesHelper4 );
+        this.boca= new THREE.Object3D();
         this.boca.position.y = -0.4
         this.boca.position.z = -1
         this.head.add(this.boca)
@@ -84,6 +76,7 @@ let drag = {
         boca_3D.position.y = -0.1
         boca_3D.position.z = 1
         this.boca.add(boca_3D)
+        this.boca.rotation.x = 0.3
 
         //adicionar pescoço+++++++++++++++++++++++++++++++++++++++++++++++++++++
         let zpesc = 0.5
@@ -91,8 +84,6 @@ let drag = {
         let xpesc = headX -0.1
 
         this.pescoço = new THREE.Object3D()
-        const axesHelperPesc1 = new THREE.AxesHelper( 1 );
-
         const pesc_angle1 = new THREE.Object3D()
         pesc_angle1.add(axesHelperPesc1)
         this.pescoço.add(pesc_angle1);
@@ -481,6 +472,7 @@ renderer.setAnimationLoop(render)
 function render() {
     let spd = 0.03
     //animação da boca
+    drag.boca.rotation.x += spd/2.5 * -exbox
     drag.body.position.y+=spd/3 * -exbox
     //animação das asas
     if (drag.asas.children[0].rotation.z>-0.4){exbox = -1}else
