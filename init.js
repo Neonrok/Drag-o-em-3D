@@ -483,14 +483,16 @@ console.log(drag.sub_asas1)
 renderer.setAnimationLoop(render)
 //função render - responsabel pela animação EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 function render() {
-    //animação da boca
     let spd = 0.03
+    //animação da boca
+    drag.body.position.y+=spd/3 * -exbox
+    //animação das asas
     if (drag.asas.children[0].rotation.z>-0.4){exbox = -1}else
     if (drag.asas.children[0].rotation.z< -2){exbox = 1};
     drag.asas.children[0].rotation.z += spd * exbox 
     drag.asas.children[1].rotation.z += -spd * exbox 
-    drag.sub_asas1.children[1].rotation.z += (spd) * exbox 
-    drag.sub_asas2.children[1].rotation.z += -spd * exbox
+    drag.sub_asas1.children[1].rotation.z += (spd/1.2) * exbox 
+    drag.sub_asas2.children[1].rotation.z += -(spd/1.2) * exbox
     
     renderer.render(scene, camera);
 };
