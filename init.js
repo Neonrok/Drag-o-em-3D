@@ -32,7 +32,7 @@ scene.add( axesHelper );
 //vTemp
 let drag = {
     x: 0, y: -1, z:0, ry: 0, angle: 0, body: null, pescoço:null, head:null,
-    boca: null, head_x: [], bodyP2: null, menbers: [], asas: null,
+    boca: null, head_x: [], bodyP2: null, menbers: [], asas: new THREE.Object3D(),
     material: new THREE.MeshLambertMaterial({ color: 0x4b4b4b, wireframe: false, side:THREE.DoubleSide}), 
     materialb: new THREE.MeshLambertMaterial({ color: 0xaa00aa, wireframe: false, side:THREE.DoubleSide}),
 
@@ -241,7 +241,6 @@ let drag = {
             subAngArt.rotation.x = -0.2
         };
         //Asas++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
-        this.asas= new THREE.Object3D()
         bodyP2.add(this.asas);
         for(let i=0; i<2; i++){
             let place_loc = {x: xbody2/2, y: ybody2*0.4, z: zbody2/2};
@@ -273,14 +272,14 @@ let drag = {
             arm_1.add(subAng);
             subAng.position.y= a1g.y/2.1;
 
-            let geometry = new THREE.BufferGeometry();
+            let geometry1 = new THREE.BufferGeometry();
             const points = [] // define array of vertices
             points.push(new THREE.Vector3(0.3, -2.2, 0.3))
             points.push(new THREE.Vector3(0.3, 0.5, -1.5))
             points.push(new THREE.Vector3(0, 0.5, 0.3))
-            geometry.setFromPoints(points);
+            geometry1.setFromPoints(points);
             
-            let As_C1 = new THREE.Mesh(geometry, this.materialb);
+            let As_C1 = new THREE.Mesh(geometry1, this.materialb);
             AsAng.add(As_C1)
             As_C1.position.y =2
             As_C1.position.z =-0.4
@@ -306,6 +305,21 @@ let drag = {
                 this.material,
             );
             subAngArt.add(arm_3)
+
+            let geometry2 = new THREE.BufferGeometry();
+            const points2 = [] // define array of vertices
+            points2.push(new THREE.Vector3(0.3, -2.2, 0.3))
+            points2.push(new THREE.Vector3(0.3, 0.5, -1.5))
+            points2.push(new THREE.Vector3(0, 0.5, 0.3))
+            geometry2.setFromPoints(points2);
+            
+            let As_C2 = new THREE.Mesh(geometry2, this.materialb);
+            arm_3.add(As_C2)
+            As_C2.position.y =0.7
+            As_C2.position.z =-0.4
+            As_C2.rotation.y= 0.2
+            As_C2.rotation.z= -0.1
+
             arm_3.position.y=a3g.y/2 
             arm_3.position.z=a3g.z/2 -0.2
           
@@ -439,7 +453,7 @@ scene.add(pointLightHelper);
 
 
 renderer.setAnimationLoop(render)
-//função render
+//função render - responsabel pela animação EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 function render() {
     //animação da boca
     let spd = 0.03
