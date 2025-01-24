@@ -241,8 +241,9 @@ let drag = {
             subAngArt.rotation.x = -0.2
         };
         //Asas++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
+        this.asas= new THREE.Object3D()
+        bodyP2.add(this.asas);
         for(let i=0; i<2; i++){
-            this.asas= new THREE.Object3D()
             let place_loc = {x: xbody2/2, y: ybody2*0.4, z: zbody2/2};
             let gen_As_axesHelper = new THREE.AxesHelper( 1 );
             let sub_Menb_axesHelper = new THREE.AxesHelper( 1 );
@@ -255,7 +256,6 @@ let drag = {
             let AsAng = new THREE.Object3D()
             this.asas.add(AsAng)
             AsAng.add(gen_As_axesHelper)
-            bodyP2.add(AsAng);
             AsAng.position.x= (place_loc.x - 0.1) * x_y
             AsAng.position.y= place_loc.y
             AsAng.position.z= (place_loc.z - 0.1)
@@ -267,7 +267,7 @@ let drag = {
             );
             AsAng.add(arm_1)
             arm_1.position.y=a1g.y/2
-            
+            console.log( this.asas)
             let subAng = new THREE.Object3D();
             subAng.add(sub_Menb_axesHelper);
             arm_1.add(subAng);
@@ -308,6 +308,7 @@ let drag = {
             subAngArt.add(arm_3)
             arm_3.position.y=a3g.y/2 
             arm_3.position.z=a3g.z/2 -0.2
+          
         }
 
         //Cauda +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
@@ -441,9 +442,13 @@ renderer.setAnimationLoop(render)
 //função render
 function render() {
     //animação da boca
-    if (drag.asas.rotation.x<0){exbox = 1}else
-    if (drag.asas.rotation.x>0.5){exbox = -1};
-    drag.asas.rotation.x += 0.01 * exbox
+    let spd = 0.03
+    if (drag.asas.children[0].rotation.z>-0.4){exbox = -1}else
+    if (drag.asas.children[0].rotation.z< -2){exbox = 1};
+    drag.asas.children[0].rotation.z += spd * exbox 
+    drag.asas.children[1].rotation.z += -spd * exbox 
+    //console.log(drag.asas)
+    console.log(drag.asas.children[0].rotation.z)
     renderer.render(scene, camera);
 };
 
